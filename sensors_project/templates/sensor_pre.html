@@ -1,0 +1,321 @@
+{% load static %}
+{% csrf_token %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Value</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nosifer&family=Nunito:wght@500&display=swap');
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 100;
+            text-align: center;
+            background-color: #186F65;
+            text-align: left;
+            list-style-position: outside;
+            .image {
+                position: relative; 
+            }
+            .image{
+                display: grid;
+                grid-template-columns: auto auto auto;
+                grid-gap: 10px;
+                padding: 10px;
+
+            }
+            
+            .image img {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+
+            /* Style for the image label */
+            .image-label {
+                position: absolute; 
+                bottom: 0; 
+                left: 0; 
+                background-color: rgba(0, 0, 0, 0.5); 
+                color: #fff; 
+                padding: 5px;
+                font-size: 14px; 
+            }
+
+        }
+           ul {
+                list-style-type: disc;
+                margin-left: 20px;
+            }
+
+            /* Style for list items */
+            li {
+                margin: 5px 0;
+            }
+            img {
+                border: 5px solid #555;
+                }
+        .container2{
+            /* add shadow to it */
+
+            background-color: #fff;
+            border: 1px solid black;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 1000px;
+            margin: 0 auto;
+            margin-top: 50px;
+
+        }
+        .container {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 500px;
+            margin: 0 auto;
+            margin-top: 50px;
+            text-align: center;
+        }
+         /* addd more styling */
+        .city {
+            background-color: #393E46;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .pest{
+            background-color: #393E46;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .highlight{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+       <div class="pest">
+        <h3>Our latest prediction shows potential of <span class="highlight">{{ your_value }}</span> in <span>{{ your_region }}</span>.</h3>
+
+       </div>
+    </div>
+    <div class="container2">
+        <div class="pest_des">
+            <div class="description">
+                {% if your_value == "Green Leaf Hopper" %}
+               
+                <div class="image">
+                    <img src="{% static 'greenLeaf.jpeg' %}" alt="pest" width="300" height="300">
+                    <p class="image-label">Green Leaf Hopper</p>
+                    <img src="{% static 'greenhopper2.jpeg' %}" alt="pest" width="300" height="300">
+                    <img src="{% static 'greenhopper3.jpeg' %}" alt="pest" width="300" height="300">
+                   </div>
+                <div class="box">
+                    <h3>Symtomps of damage</h3>
+                    <ul>
+                        <li>Yellowing of leaves from tip to downwards</li>
+                        <li>Vector for the diseases viz., Rice tungro virus, rice yellow & transitory yellowing cause direct damage to the rice plant</li>
+                        <li>Retarded vigorous and stunted growth</li>
+                        <li>Drying up of plant due to sucking up of the leaf</li>
+                    </ul>
+                </div>
+                <div class="management">
+                    <h3>Management</h3>
+                    <ul>
+                        <li>Nursery should not be located near the street lamps.</li>
+                        <li>Spray any one of the following insecticides:</li>
+                        <ul>
+                            <li>Phosphamidon 40 SL - 50 ml.<span><a href="https://www.google.com/search?q=Phosphamidon+40+SL&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKmlESO3X0MhRroqbzaRefG4eoO_ag%3A1698208617552&ei=aZs4ZZLxIKuhseMPrdi6iAU&ved=0ahUKEwjSyZyLsJCCAxWrUGwGHS2sDlEQ4dUDCAg&uact=5&oq=Phosphamidon+40+SL&gs_lp=Egtwcm9kdWN0cy1jYyISUGhvc3BoYW1pZG9uIDQwIFNMSOAQUABY6gtwAHgAkAEAmAHEAaABggOqAQMwLjK4AQPIAQD4AQH4AQLCAgUQABiABIgGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Phosalone 35 EC - 120 ml.<span><a href="https://www.google.com/search?q=Phosalone+35+EC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKmzAhHBmrBUeqo39P8LOi8QXWO1LA%3A1698209035824&ei=C504ZYnPMeDuseMP3OGUGA&ved=0ahUKEwjJgNbSsZCCAxVgd2wGHdwwBQMQ4dUDCAg&uact=5&oq=Phosalone+35+EC&gs_lp=Egtwcm9kdWN0cy1jYyIPUGhvc2Fsb25lIDM1IEVDSPwQUL0LWL0LcAF4AJABAJgBwQGgAcEBqgEDMC4xuAEDyAEA-AEB-AECqAICwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                        </ul>
+                        <li>Maintain 2.5 cm of water in the nursery and broadcast anyone of the following in 20 cents:</li>
+                        <ul>
+                            <li>Carbofuran 3 G - 3.5 kg.<span><a href="https://www.google.com/search?q=Carbofuran+3+G&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKmGh-uviOymmzGVsJqsMKookr1aiQ%3A1698209073738&ei=MZ04Zd23LMSeseMP3JmniAM&ved=0ahUKEwidlODksZCCAxVET2wGHdzMCTEQ4dUDCAg&uact=5&oq=Carbofuran+3+G&gs_lp=Egtwcm9kdWN0cy1jYyIOQ2FyYm9mdXJhbiAzIEcyBxAAGA0YgAQyBxAAGA0YgAQyBxAAGA0YgAQyCRAAGA0YGBiABDIJEAAYDRgYGIAEMgkQABgNGBgYgAQyCRAAGA0YGBiABDIJEAAYDRgYGIAEMgkQABgNGBgYgAQyCRAAGA0YGBiABEjSDFDICFjICHABeACQAQCYAcgBoAHIAaoBAzItMbgBA8gBAPgBAfgBAqgCA8ICBxAjGOoCGCeIBgE&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Phorate 10 G - 1.0 kg.<span><a href="https://www.google.com/search?sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&tbm=shop&sxsrf=AM9HkKkwqMStPNgk9lPvPLxn2V4rDvjn6Q:1698209145020&q=Phorate+10G&spell=1&sa=X&ved=0ahUKEwj1_N2GspCCAxVjdmwGHYx_DAAQBQiWCygA&biw=1229&bih=608&dpr=1.56" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                        </ul>
+                    </ul>
+                </div>
+                {% elif your_value == "White Blacked Plant Hopper" %}
+                    <div class="image">
+                        <img src="{% static 'whitehopper.jpeg' %}" alt="pest" width="300" height="300">
+                        <img src="{% static 'whitehopper2.jpeg' %}" alt="pest" width="300" height="300">
+                        <img src="{% static 'whitehopper3.jpeg' %}" alt="pest" width="300" height="300">
+                        <p class="image-label">White Blacked Plant Hopper</p>
+                    </div>
+                   <div class="box">
+                    <h3>Symtomps of damage</h3>
+                    <ul>
+                        <li>Presence of brown coloured egg mass near leaf tip</li>
+                        <li>Larva bores into central shoot of paddy seedling and tiller, causing drying of the central shoot known as “dead heart”</li>
+                        <li>If infestation occurs in grown up plant, the whole panicle becomes dried and known as “white ear”</li>
+                        <li>Affected shoots and panicles could be easily pulled by hand</li>
+                    </ul>
+
+                   </div>
+                   <div class="managment">
+                    <h3>Management</h3>
+                    <ul>
+                        <li>Avoid close planting and provide 30 cm rogue spacing at every 2.5 to 3.0 m.</li>
+                        <li>Control irrigation by alternate wetting and drying.</li>
+                        <li>Avoid excessive use of nitrogen.</li>
+                        <li>Apply any one of the following insecticides:</li>
+                        <ul>
+                            <li>Acetamiprid 20% SP - 20-40 g/ac.<span><a href="https://www.google.com/search?q=Acetamiprid+20%25+SP&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKkTQdpLnAfEWrxMOXZa5En7Y1Rhcg%3A1698209149152&ei=fZ04Zb3FCNjeseMPiqWpuAk&ved=0ahUKEwj999qIspCCAxVYb2wGHYpSCpcQ4dUDCAg&uact=5&oq=Acetamiprid+20%25+SP&gs_lp=Egtwcm9kdWN0cy1jYyISQWNldGFtaXByaWQgMjAlIFNQMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBhAAGBYYHkj2KlCCCVj-I3AEeACQAQCYAc4BoAGNA6oBBTAuMS4xuAEDyAEA-AEB-AECqAIFwgIHECMY6gIYJ8ICBxAAGIoFGEOIBgE&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Acephate 75% SP - 400 g/ac.<span><a href="https://www.google.com/search?q=Acephate+75%25+SP&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKngIEz81JrLb1UJHfpPirexYn_g_A%3A1698209188474&ei=pJ04ZdTaG7eXseMPvIua4Ac&ved=0ahUKEwjUvLqbspCCAxW3S2wGHbyFBnwQ4dUDCAg&uact=5&oq=Acephate+75%25+SP&gs_lp=Egtwcm9kdWN0cy1jYyIPQWNlcGhhdGUgNzUlIFNQMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgARI4A1QywlYywlwAXgAkAEAmAHEAaABxAGqAQMwLjG4AQPIAQD4AQH4AQKoAgbCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Buprofezin 25% SC - 320 ml/ac.<span><a href="https://www.google.com/search?q=Buprofezin+25%25+SC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKlnWP-rfbTLNJqbXlm0Iq5bp-9i_A%3A1698209214106&ei=vp04ZYvmBeqZseMPtNiH4AQ&ved=0ahUKEwiLvdenspCCAxXqTGwGHTTsAUwQ4dUDCAg&uact=5&oq=Buprofezin+25%25+SC&gs_lp=Egtwcm9kdWN0cy1jYyIRQnVwcm9mZXppbiAyNSUgU0MyBRAAGIAESJcPUIQJWIQJcAF4AJABAJgBwQGgAcEBqgEDMC4xuAEDyAEA-AEB-AECqAIHwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Carbosulfan 25 EC - 400 ml/ac.<span><a href="https://www.google.com/search?q=Carbosulfan+25+EC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKkyBLsOuU7JHqycuts1k8PHfSUbsA%3A1698209276549&ei=_J04ZevfIL2NseMPkrGzoAI&ved=0ahUKEwjrzbrFspCCAxW9RmwGHZLYDCQQ4dUDCAg&uact=5&oq=Carbosulfan+25+EC&gs_lp=Egtwcm9kdWN0cy1jYyIRQ2FyYm9zdWxmYW4gMjUgRUMyBRAAGIAEMgUQABiABEilC1C4CFi4CHABeACQAQCYAcEBoAHBAaoBAzAuMbgBA8gBAPgBAfgBAqgCCMICBxAjGOoCGCeIBgE&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Chlorantraniliprole 18.5% SC - 60 g/ac.<span><a href="https://www.google.com/search?q=Chlorantraniliprole+18.5%25+SC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKk7S1zm_pMWM8yDoF9acOoQdtl9wg%3A1698209300075&ei=FJ44ZafpA9fXseMP5vOlwAg&ved=0ahUKEwinw9bQspCCAxXXa2wGHeZ5CYgQ4dUDCAg&uact=5&oq=Chlorantraniliprole+18.5%25+SC&gs_lp=Egtwcm9kdWN0cy1jYyIcQ2hsb3JhbnRyYW5pbGlwcm9sZSAxOC41JSBTQzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIGEAAYFhgeSM0NUIsKWIsKcAF4AJABAJgBxAGgAcQBqgEDMC4xuAEDyAEA-AEB-AECqAIJwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Chlorantraniliprole 0.4% G - 4 kg/ac.<span><a href="https://www.google.com/search?q=Chlorantraniliprole+0.4%25+G&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKldCm_pZuA_cSqjALSWr4Hstz-LmQ%3A1698209324892&ei=LJ44ZejlNb3WseMPn-u5iA8&ved=0ahUKEwjoq8HcspCCAxU9a2wGHZ91DvEQ4dUDCAg&uact=5&oq=Chlorantraniliprole+0.4%25+G&gs_lp=Egtwcm9kdWN0cy1jYyIaQ2hsb3JhbnRyYW5pbGlwcm9sZSAwLjQlIEcyBRAAGIAEMgYQABgWGB5I1w1QhwlYhwlwAXgAkAEAmAHEAaABxAGqAQMwLjG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Clothianidin 50% WG - 8-9.6 g/ac.<span><a href="https://www.google.com/search?q=Clothianidin+50%25+WG&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKlOQJroYpsvFCSwXO5zMjBhLt_TvQ%3A1698209350386&ei=Rp44ZdDxFqPPseMPns26uAM&ved=0ahUKEwjQrNXospCCAxWjZ2wGHZ6mDjcQ4dUDCAg&uact=5&oq=Clothianidin+50%25+WG&gs_lp=Egtwcm9kdWN0cy1jYyITQ2xvdGhpYW5pZGluIDUwJSBXRzIGEAAYFhgeMgYQABgWGB5I3Q9QrQhYrQhwAXgAkAEAmAHKAaABygGqAQMyLTG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Chlorpyriphos 20 EC - 500 ml/ac.<span><a href="https://www.google.com/search?q=Chlorpyriphos+20+EC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKlhSByAF1D1MhNAiTKQT_Y1OZg0eA%3A1698209399056&ei=d544ZefXApzdseMPyIuKiA4&ved=0ahUKEwin7-__spCCAxWcbmwGHciFAuEQ4dUDCAg&uact=5&oq=Chlorpyriphos+20+EC&gs_lp=Egtwcm9kdWN0cy1jYyITQ2hsb3JweXJpcGhvcyAyMCBFQzIFEAAYgAQyBRAAGIAEMgUQABiABDIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeSM4OUJIIWJIIcAF4AJABAJgBxgGgAcYBqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                        </ul>
+                    </ul>
+                </div>
+                {% elif your_value == "Brown Plant Hopper" %}
+                <div class="image">
+                    <img src="{% static 'brownhopper.jpeg' %}" alt="pest" width="300" height="300">
+                    <img src="{% static 'browbhopper3.jpeg' %}" alt="pest" width="300" height="300">
+                    <img src="{% static 'brwonhopper2.jpeg' %}" alt="pest" width="300" height="300">
+                    <p class="image-label">Brown Plant Hoppper</p>
+                </div>
+                <div class="box">
+                    <h3>Symtomps of damage</h3>
+                    <ul>
+                        <li>Nymphs and adults congregate at the base of the plant above the water level.</li>
+                        <li>Affected plant dries up and gives a scorched appearance called "hopper burn".</li>
+                        <li>Circular patches of drying and lodging of matured plant.</li>
+                        <li>It transmits grassy stunt, ragged stunt, and wilted stunt diseases.</li>
+                        <li>Honeydew is secreted by nymphs and adults, which causes sooty mold at the base.</li>
+                    </ul>
+
+                </div>
+                <div class="managment">
+                    <h3>Management</h3>
+                    <ul>
+                        <li>Planting Recommendations</li>
+                        <ul>
+                            <li>Avoid close planting and provide 30 cm rogue spacing at every 2.5 to 3.0 m.</li>
+                            <li>Control irrigation by alternate wetting and drying.</li>
+                            <li>Avoid excessive use of nitrogen.</li>
+                        </ul>
+                        <li>Pest Control Recommendations</li>
+                        <ul>
+                            <li>Release natural enemies like Lycosa pseudoannulata, Cyrtorhinus lividipennis adults (200-250 bugs/ha) during the peak incidence of BPH.</li>
+                            <li>Set up light traps during the night or yellow pan traps during the daytime.</li>
+                            <li>Drain the water before using insecticides and direct the spray towards the base of the plants.</li>
+                            <li>Apply Neem oil 3% - 6 lit/ac or Azadirachtin 0.03% - 400 ml/ac.</li>
+                            <li>Apply any one of the following insecticides:</li>
+                            <ul>
+                                <li>Acetamiprid 20% SP - 20-40 g/ac.<span><a href="https://www.google.com/search?q=Acetamiprid+20%25+SP&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKn_29KggLlpZyWd916cC4YiCinAeg%3A1698209426233&ei=kp44ZYawDZrVseMPg7qQSA&ved=0ahUKEwiGweqMs5CCAxWaamwGHQMdBAkQ4dUDCAg&uact=5&oq=Acetamiprid+20%25+SP&gs_lp=Egtwcm9kdWN0cy1jYyISQWNldGFtaXByaWQgMjAlIFNQMgQQIxgnMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBhAAGBYYHkj9C1DmBVjmBXABeACQAQCYAcABoAHAAaoBAzAuMbgBA8gBAPgBAfgBAqgCCsICBxAjGOoCGCeIBgE&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                <li>Acephate 75% SP - 400 g/ac.<span><a href="https://www.google.com/search?q=Acephate+75%25+SP&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKm9qEZkDXo5y5qw99HZ-T4D_5HZbQ%3A1698209455128&ei=r544ZfzSBrfXseMP2vyTsAI&ved=0ahUKEwi85s2as5CCAxW3a2wGHVr-BCYQ4dUDCAg&uact=5&oq=Acephate+75%25+SP&gs_lp=Egtwcm9kdWN0cy1jYyIPQWNlcGhhdGUgNzUlIFNQMgQQIxgnMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgARIrQhQwgRYwgRwAXgAkAEAmAGyAaABsgGqAQMwLjG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                <li>Buprofezin 25% SC - 320 ml/ac.<span><a href="https://www.google.com/search?q=Buprofezin+25%25+SC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKnPHxERAtIcCakYaQoCfCTZcvWV7Q%3A1698209476298&ei=xJ44ZYm8EaLbseMPh4CvqAI&ved=0ahUKEwiJrtqks5CCAxWibWwGHQfACyUQ4dUDCAg&uact=5&oq=Buprofezin+25%25+SC&gs_lp=Egtwcm9kdWN0cy1jYyIRQnVwcm9mZXppbiAyNSUgU0MyBBAjGCcyBRAAGIAESKUHUNMEWNMEcAF4AJABAJgBsQGgAbEBqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                <li>Carbosulfan 25 EC - 400 ml/ac.<span><a href="https://www.google.com/search?q=Carbosulfan+25+EC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKn2fI25uPmxyPDzKgYtu0kpZLT4lg%3A1698209496889&ei=2J44ZenENfj4seMPsMOZqAM&ved=0ahUKEwjpkMOus5CCAxV4fGwGHbBhBjUQ4dUDCAg&uact=5&oq=Carbosulfan+25+EC&gs_lp=Egtwcm9kdWN0cy1jYyIRQ2FyYm9zdWxmYW4gMjUgRUMyBBAjGCcyBRAAGIAESK8LUNsDWNsDcAF4AJABAJgBrQGgAa0BqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                <li>Chlorantraniliprole 18.5% SC - 60 g/ac.<span><a href="https://www.google.com/search?q=Chlorantraniliprole+18.5%25+SC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKkE8ARN1G9qkz7JOjpDb0ZiOe7MHg%3A1698209545380&ei=CZ84ZeikFrPjseMP0qiHuA0&ved=0ahUKEwiozdLFs5CCAxWzcWwGHVLUAdcQ4dUDCAg&uact=5&oq=Chlorantraniliprole+18.5%25+SC&gs_lp=Egtwcm9kdWN0cy1jYyIcQ2hsb3JhbnRyYW5pbGlwcm9sZSAxOC41JSBTQzIEECMYJzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIGEAAYFhgeSO4NUKcGWKcGcAF4AJABAJgBsQGgAbEBqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                <li>Chlorantraniliprole 0.4% G - 4 kg/ac.<span><a href="https://www.google.com/search?q=Chlorantraniliprole+0.4%25+G&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKlvtu8p9dR5dc7o-cwWTtBm5gpIlQ%3A1698209573913&ei=JZ84ZfrnNp2vseMPvISn-AY&ved=0ahUKEwi6jqDTs5CCAxWdV2wGHTzCCW8Q4dUDCAg&uact=5&oq=Chlorantraniliprole+0.4%25+G&gs_lp=Egtwcm9kdWN0cy1jYyIaQ2hsb3JhbnRyYW5pbGlwcm9sZSAwLjQlIEcyBBAjGCcyBRAAGIAEMgYQABgWGB5IowhQxgRYxgRwAXgAkAEAmAGyAaABsgGqAQMwLjG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                <li>Clothianidin 50% WG - 8-9.6 g/ac.<span><a href="https://www.google.com/search?q=Clothianidin+50%25+WG&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKk3_1gwKl28Xjlbf6mPaEsTLLb1bA%3A1698209596161&ei=PJ84ZZiICfbiseMPvK2NqAs&ved=0ahUKEwiYlu7ds5CCAxV2cWwGHbxWA7UQ4dUDCAg&uact=5&oq=Clothianidin+50%25+WG&gs_lp=Egtwcm9kdWN0cy1jYyITQ2xvdGhpYW5pZGluIDUwJSBXRzIEECMYJzIGEAAYFhgeMgYQABgWGB5IvwtQjQhYjQhwAXgAkAEAmAHNAaABzQGqAQMyLTG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                <li>Chlorpyriphos 20 EC - 500 ml/ac.<span><a href="https://www.google.com/search?q=Chlorpyriphos+20+EC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKnS8KTw3wE9LQ9ZqD7bs0OYryF_gQ%3A1698209616957&ei=UJ84ZezdOd_dseMP0tGpqAc&ved=0ahUKEwjsxePns5CCAxXfbmwGHdJoCnUQ4dUDCAg&uact=5&oq=Chlorpyriphos+20+EC&gs_lp=Egtwcm9kdWN0cy1jYyITQ2hsb3JweXJpcGhvcyAyMCBFQzIEECMYJzIFEAAYgAQyBRAAGIAEMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB5I5QhQggZYggZwAXgAkAEAmAGzAaABswGqAQMwLjG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            </ul>
+                        </ul>
+                    </ul>
+                </div>
+                
+                {% elif your_value == "Yellow Stem borer" %}
+                <div class="image">
+                    <img src="{% static 'yellowStem.jpeg' %}" alt="pest" width="300" height="300">
+                    <img src="{% static 'yellostem2.jpeg' %}" alt="pest" width="300" height="300">
+                    <img src="{% static 'yellowstem3.jpeg' %}" alt="pest" width="300" height="300">
+                    <p class="image-label">Yellow Stem borer</p>
+                </div>
+                <div class="box">
+                    <h3>Symtomps of damage</h3>
+                    <li>Presence of brown-colored egg mass near leaf tip.</li>
+                    <li>Larva bores into the central shoot of paddy seedling and tiller, causing drying of the central shoot known as "dead heart".</li>
+                    <li>If infestation occurs in the grown-up plant, the whole panicle becomes dried and is known as "white ear".</li>
+                    <li>Affected shoots and panicles could be easily pulled by hand.</li>
+                </div>
+                <div class="management">
+                    <h3>Management</h3>
+                    <ul>
+                        <li>Spray Neem seed kernel extract 5% or Azadirachtin 0.03% - 400 ml/ac . <span><a href="https://www.google.com/search?sca_esv=576492108&sxsrf=AM9HkKnqqiA2vlmxEBAqyz9lxOCyvz19lA:1698237671686&q=Azadirachtin+0.03%25+-+400+ml/ac&tbm=shop&source=lnms&sa=X&ved=2ahUKEwinw6ipnJGCAxXCd94KHXauAPoQ0pQJegQIChAB&biw=1440&bih=824&dpr=2" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                        <li>Spray any one of the following insecticides:</li>
+                        <ul>
+                            <li>Acephate 75% SP - 267-400 g/ac.<span><a href="https://www.google.com/search?q=Acephate+75%25+SP&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKnijnZv4hTRO2aK50vFtMXsw6Q3WQ%3A1698209645752&ei=bZ84Zb6iLcubseMPmYuB0A4&ved=0ahUKEwj-jMH1s5CCAxXLTWwGHZlFAOoQ4dUDCAg&uact=5&oq=Acephate+75%25+SP&gs_lp=Egtwcm9kdWN0cy1jYyIPQWNlcGhhdGUgNzUlIFNQMgQQIxgnMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgARI2QpQ1wVY1wVwAXgAkAEAmAG1AaABtQGqAQMwLjG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Carbofuran 3% CG - 10 kg/ac .<span><a href="https://www.google.com/search?q=Carbofuran+3%25+CG&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKnO0xPazSCvfyOgnw68HS0Vl8h9tw%3A1698209675395&ei=i584ZdauF92eseMPktS86Ag&ved=0ahUKEwiWoNKDtJCCAxVdT2wGHRIqD40Q4dUDCAg&uact=5&oq=Carbofuran+3%25+CG&gs_lp=Egtwcm9kdWN0cy1jYyIQQ2FyYm9mdXJhbiAzJSBDRzIFEAAYgARIpwlQ8AVY8AVwAXgAkAEAmAHEAaABxAGqAQMwLjG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Carbosulfan 6% G - 6.7 kg/ac .<span><a href="https://www.google.com/search?q=Carbosulfan+6%25+G&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKmm_MkEIkyctshjZAm4403DlC4rbw%3A1698209692973&ei=nJ84ZZ7JOuL3seMPg_65qQI&ved=0ahUKEwieh4OMtJCCAxXie2wGHQN_LiUQ4dUDCAg&uact=5&oq=Carbosulfan+6%25+G&gs_lp=Egtwcm9kdWN0cy1jYyIQQ2FyYm9zdWxmYW4gNiUgR0jPDVC-CFi-CHABeACQAQCYAbgBoAG4AaoBAzAuMbgBA8gBAPgBAfgBAqgCCsICBxAjGOoCGCeIBgE&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Carbosulfan 25% EC - 320-400 ml/ac .<span><a href="https://www.google.com/search?q=Carbosulfan+25%25+EC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKlYATzVdhkXd9LamKR5RFQbOBwdzQ%3A1698209710468&ei=rp84ZZfqG_36seMPstKMEA&ved=0ahUKEwiX-a6UtJCCAxV9fWwGHTIpAwIQ4dUDCAg&uact=5&oq=Carbosulfan+25%25+EC&gs_lp=Egtwcm9kdWN0cy1jYyISQ2FyYm9zdWxmYW4gMjUlIEVDMgQQIxgnMgUQABiABEjFDlC4Cli4CnABeACQAQCYAbgBoAG4AaoBAzAuMbgBA8gBAPgBAfgBAqgCCsICBxAjGOoCGCeIBgE&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Cartap Hydrochloride 50% SP - 400 g/ac .<span><a href="https://www.google.com/search?q=Cartap+Hydrochloride+50%25+SP&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKlECfTuXGr4ZvoByKqsPzJrX19P5Q%3A1698209744264&ei=0J84ZaOhD6SOseMP7NGw6AI&ved=0ahUKEwijyb2ktJCCAxUkR2wGHewoDC0Q4dUDCAg&uact=5&oq=Cartap+Hydrochloride+50%25+SP&gs_lp=Egtwcm9kdWN0cy1jYyIbQ2FydGFwIEh5ZHJvY2hsb3JpZGUgNTAlIFNQMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAESMgIULYFWLYFcAF4AJABAJgBtQGgAbUBqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Chlorantraniliprole 18.5% SC - 60 ml/ac .<span><a href="https://www.google.com/search?q=Chlorantraniliprole+18.5%25+SC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKlpkJob_MnpmjPZCb7GROfloj-TwQ%3A1698209763587&ei=4584ZYWXI76bseMP5tO74AQ&ved=0ahUKEwjFlNmttJCCAxW-TWwGHebpDkwQ4dUDCAg&uact=5&oq=Chlorantraniliprole+18.5%25+SC&gs_lp=Egtwcm9kdWN0cy1jYyIcQ2hsb3JhbnRyYW5pbGlwcm9sZSAxOC41JSBTQzIEECMYJzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIGEAAYFhgeSNEOUM8KWM8KcAF4AJABAJgBtQGgAbUBqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Chlorantraniliprole 0.4% G - 4 kg/ac .<span><a href="https://www.google.com/search?q=Chlorantraniliprole+0.4%25+G&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKmeIFdTjjLU9p_3cUkdPooDK64tIQ%3A1698209787344&ei=-584ZeeYFJiaseMP2-auwAs&ved=0ahUKEwingoO5tJCCAxUYTWwGHVuzC7gQ4dUDCAg&uact=5&oq=Chlorantraniliprole+0.4%25+G&gs_lp=Egtwcm9kdWN0cy1jYyIaQ2hsb3JhbnRyYW5pbGlwcm9sZSAwLjQlIEcyBBAjGCcyBRAAGIAEMgYQABgWGB5I4wtQ1AhY1AhwAXgAkAEAmAG1AaABtQGqAQMwLjG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Chlorpyriphos 20% EC - 500 ml/ac .<span><a href="https://www.google.com/search?q=Chlorpyriphos+20%25+EC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKl7YlqbDVlxk5n44SFvIj8DGk6_8w%3A1698209809391&ei=EaA4Zbz-FsSeseMPvPm-kAg&ved=0ahUKEwj8ysTDtJCCAxVET2wGHby8D4IQ4dUDCAg&uact=5&oq=Chlorpyriphos+20%25+EC&gs_lp=Egtwcm9kdWN0cy1jYyIUQ2hsb3JweXJpcGhvcyAyMCUgRUMyBBAjGCcyBRAAGIAEMgUQABiABDIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeSIMJUPQFWPQFcAF4AJABAJgBtwGgAbcBqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Fipronil 5% SC - 400-600 g/ac .<span><a href="https://www.google.com/search?q=Fipronil+5%25+SC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKnvfH2xwHyxoF4iPVOsrr8dV3eebw%3A1698209833148&ei=KaA4ZbqgCKrVseMP07OymAc&ved=0ahUKEwj62O7OtJCCAxWqamwGHdOZDHMQ4dUDCAg&uact=5&oq=Fipronil+5%25+SC&gs_lp=Egtwcm9kdWN0cy1jYyIORmlwcm9uaWwgNSUgU0MyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgYQABgWGB5ImA1QpgpYpgpwAXgAkAEAmAHBAaABwQGqAQMwLjG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Fipronil 80% WG - 20-25 g/ac .<span><a href="https://www.google.com/search?q=Fipronil+80%25+WG&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKnZKw7vxfqYBEc_W4R4-i4-5R7ZSw%3A1698209895546&ei=Z6A4ZZe3IOudseMPt9uvsAM&ved=0ahUKEwjXhs_stJCCAxXrTmwGHbftCzYQ4dUDCAg&uact=5&oq=Fipronil+80%25+WG&gs_lp=Egtwcm9kdWN0cy1jYyIPRmlwcm9uaWwgODAlIFdHMgUQABiABDIFEAAYgARIpgtQgwhYgwhwAXgAkAEAmAG7AaABuwGqAQMwLjG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Flubendiamide 20% WG - 50 g/ac .<span><a href="https://www.google.com/search?q=Flubendiamide+20%25+WG&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKl3N3TaSNZBAUsbFONZNdyKZmjQnA%3A1698209916972&ei=fKA4Zf_OOrHfseMPhbSQkAY&ved=0ahUKEwj__Or2tJCCAxWxb2wGHQUaBGIQ4dUDCAg&uact=5&oq=Flubendiamide+20%25+WG&gs_lp=Egtwcm9kdWN0cy1jYyIURmx1YmVuZGlhbWlkZSAyMCUgV0cyBRAAGIAESOMLULUIWLUIcAF4AJABAJgB4gGgAeIBqgEDMi0xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Flubendiamide 39.35% M/M SC - 20 g/ac .<span><a href="https://www.google.com/search?sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&tbm=shop&sxsrf=AM9HkKnfM1wH7fHUFOl9jbFMU1i0Jekcxw:1698209961246&q=Flubendiamide+39.35%25+MM+Sc&spell=1&sa=X&ved=0ahUKEwiGj_mLtZCCAxXwSmwGHeHqAHIQBQjJBSgA&biw=1229&bih=608&dpr=1.56" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Thiacloprid 21.7% SC - 200 g/ac .<span><a href="https://www.google.com/search?q=Thiacloprid+21.7%25+SC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKnsJ5rgOODNvbrERY5Xd-mOK2C3xQ%3A1698209964626&ei=rKA4ZcSvJajcseMPyfu96Ao&ved=0ahUKEwjEtceNtZCCAxUobmwGHcl9D60Q4dUDCAg&uact=5&oq=Thiacloprid+21.7%25+SC&gs_lp=Egtwcm9kdWN0cy1jYyIUVGhpYWNsb3ByaWQgMjEuNyUgU0MyBRAAGIAESPsOUN0IWN0IcAF4AJABAJgB5QGgAeUBqgEDMi0xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                            <li>Thiamethoxam 25% WG - 40 g/ac .<span><a href="https://www.google.com/search?q=Thiamethoxam+25%25+WG&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKltysgd2tRzvdI1LNlLZPVwmzCZhw%3A1698209984613&ei=wKA4Za7TJNiUseMP_M7eqAQ&ved=0ahUKEwius4uXtZCCAxVYSmwGHXynF0UQ4dUDCAg&uact=5&oq=Thiamethoxam+25%25+WG&gs_lp=Egtwcm9kdWN0cy1jYyITVGhpYW1ldGhveGFtIDI1JSBXRzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBhAAGBYYHjIGEAAYFhgeSNUJUOQFWOQFcAF4AJABAJgBvgGgAb4BqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                    </ul>
+                </div>
+                <!-- Leaf Folder-->
+                {% elif your_value == "Leaf Folder" %}
+                <div class="pest-info">
+                    <div class="image">
+                        <img src="{% static 'leafFolder.jpeg' %}" alt="pest" >
+                        <img src="{% static 'leaffolder2.jpeg' %}" alt="pest" width="300" height="300">
+                        <img src="{% static 'leaffolder3.jpeg' %}" alt="pest" width="300" height="300">
+                        <p class="image-label">Leaf Folder</p>
+                    </div>
+                    <div class="cont" >
+                        <div class="box"></div>
+                        <h3>Symtomps of damage</h3>
+                        <ul>
+                            <li>Larva folds the leaves longitudinally and larva remains inside</li>
+                            <li>Larva scrapes the green tissues of the leaves, which later becomes white and dry.</li>
+                            <li>During severe infestation the whole field exhibits scorched appearance</li>
+                        </ul>
+                        
+                    </div>
+                    <div class="managment">
+                        <h3>Management</h3>
+                        <ul>
+                            <li>Avoid excessive nitrogenous fertilizers</li>
+                            <li>Spray NSKE 5 % or Azadirachtin 0.03% 400 ml/ac</li>
+                            <li>Spray any one of the following insectcides</li>
+                            <ul>
+                                    <li>Phosalone 35 EC - 600 ml/ac.<span><a href="https://www.google.com/search?q=Phosalone+35+EC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKn4txLoovWNsv4Cu0UsxYiNMetYew%3A1698210005472&ei=1aA4ZbWKHLHXseMPuZOW8AE&ved=0ahUKEwj1yIShtZCCAxWxa2wGHbmJBR4Q4dUDCAg&uact=5&oq=Phosalone+35+EC&gs_lp=Egtwcm9kdWN0cy1jYyIPUGhvc2Fsb25lIDM1IEVDMgQQIxgnSJQOUIMKWIMKcAB4AJABAJgBqQGgAdACqgEDMC4yuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                    <li>Chlorpyriphos 20 EC - 500 ml/ac.<span><a href="https://www.google.com/search?q=Chlorpyriphos+20+EC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKlYe-_rmRmWQP1YJ6Io24QAY73X8g%3A1698210711962&ei=l6M4ZcX0OcHe2roP_6GskAs&ved=0ahUKEwiFnPXxt5CCAxVBr1YBHf8QC7IQ4dUDCAg&uact=5&oq=Chlorpyriphos+20+EC&gs_lp=Egtwcm9kdWN0cy1jYyITQ2hsb3JweXJpcGhvcyAyMCBFQzIEECMYJzIEECMYJzIFEAAYgAQyBRAAGIAEMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeSNUIUJ8FWJ8FcAF4AJABAJgBjQGgAY0BqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                    <li>Acephate 75% SP - 267-400 ml/ac.<span><a href="https://www.google.com/search?q=Acephate+75%25+SP&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKldnU06OxiqVkleoRPL65o7FkJpTg%3A1698210733789&ei=raM4Zfe7L5Th2roPktSk6AU&ved=0ahUKEwi3xqn8t5CCAxWUsFYBHRIqCV0Q4dUDCAg&uact=5&oq=Acephate+75%25+SP&gs_lp=Egtwcm9kdWN0cy1jYyIPQWNlcGhhdGUgNzUlIFNQMgQQIxgnMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgARIzA1QvQlYvQlwAXgAkAEAmAHHAaABxwGqAQMwLjG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                    <li>Carbosulfan 6% G - 6.7 kg/ac.<span><a href="https://www.google.com/search?q=Carbosulfan+6%25+G&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKl16XGiySHRaPs0ReIuChJ4a9kN-g%3A1698210766033&ei=zqM4ZZqYAc_i2roPnoycuAo&ved=0ahUKEwiat9mLuJCCAxVPsVYBHR4GB6cQ4dUDCAg&uact=5&oq=Carbosulfan+6%25+G&gs_lp=Egtwcm9kdWN0cy1jYyIQQ2FyYm9zdWxmYW4gNiUgRzIEECMYJ0j4DFDECVjECXABeACQAQCYAZIBoAGSAaoBAzAuMbgBA8gBAPgBAfgBAqgCCsICBxAjGOoCGCeIBgE&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                    <li>Cartap Hydrochloride 50% SP - 400 g/ac.<span><a href="https://www.google.com/search?q=Cartap+Hydrochloride+50%25+SP&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKnSJ_-BDp--aTz9cgfxG_y8Ffnc-w%3A1698210788846&ei=5KM4ZZvYMvGK2roPt8eOqAI&ved=0ahUKEwib2smWuJCCAxVxhVYBHbejAyUQ4dUDCAg&uact=5&oq=Cartap+Hydrochloride+50%25+SP&gs_lp=Egtwcm9kdWN0cy1jYyIbQ2FydGFwIEh5ZHJvY2hsb3JpZGUgNTAlIFNQMgQQIxgnMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAESO4IUK0FWK0FcAF4AJABAJgBkgGgAZIBqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                    <li>Chlorantraniliprole 18.5% SC - 60 g/ac.<span><a href="https://www.google.com/search?q=Chlorantraniliprole+18.5%25+SC&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKlcbpyZwdeWeV8-ZDglfqHNgWZwuw%3A1698210830315&ei=DqQ4ZayoEriv0-kP7qq72AI&ved=0ahUKEwis56yquJCCAxW41zQHHW7VDisQ4dUDCAg&uact=5&oq=Chlorantraniliprole+18.5%25+SC&gs_lp=Egtwcm9kdWN0cy1jYyIcQ2hsb3JhbnRyYW5pbGlwcm9sZSAxOC41JSBTQzIEECMYJzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIGEAAYFhgeSP4MUKMJWKMJcAF4AJABAJgBmgGgAZoBqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                    <li>Chlorantraniliprole 0.4% G - 4 kg/ac.<span><a href="https://www.google.com/search?q=Chlorantraniliprole+0.4%25+G&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKlY4fB9ZIr3lsilFSemuLuJg9gwvw%3A1698210868532&ei=NKQ4ZcWtH8XT2roPgtmYgAQ&ved=0ahUKEwjFl8m8uJCCAxXFqVYBHYIsBkAQ4dUDCAg&uact=5&oq=Chlorantraniliprole+0.4%25+G&gs_lp=Egtwcm9kdWN0cy1jYyIaQ2hsb3JhbnRyYW5pbGlwcm9sZSAwLjQlIEcyBBAjGCcyBRAAGIAEMgYQABgWGB5IuA1QoAlYoAlwAXgAkAEAmAGVAaABlQGqAQMwLjG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                    <li>Fipronil 80% WG - 20-25 g/ac.<span><a href="https://www.google.com/search?q=Fipronil+80%25+WG&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKm0nIGK1UMV7Y2Owr-fw69oUsEMQQ%3A1698210895875&ei=T6Q4ZbDlNNDf2roP3fiAqAo&ved=0ahUKEwjwyM7JuJCCAxXQr1YBHV08AKUQ4dUDCAg&uact=5&oq=Fipronil+80%25+WG&gs_lp=Egtwcm9kdWN0cy1jYyIPRmlwcm9uaWwgODAlIFdHMgQQIxgnMgUQABiABDIFEAAYgARI8gpQtgVYtgVwAXgAkAEAmAGcAaABnAGqAQMwLjG4AQPIAQD4AQH4AQKoAgrCAgcQIxjqAhgniAYB&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                    <li>Flubendiamide 39.35% M/M SC - 20 g/ac.<span><a href="https://www.google.com/search?sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&tbm=shop&sxsrf=AM9HkKl2_Gx6qNeAuAcFVOr2D8bMceJnKQ:1698210946565&q=Flubendiamide+39.35%25+MM+SC&spell=1&sa=X&ved=0ahUKEwjypeThuJCCAxWOtlYBHSisBqgQBQjKBSgA&biw=1229&bih=608&dpr=1.56" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                    <li>Flubendiamide 20% WG - 50-100 g/ac.<span><a href="https://www.google.com/search?q=Flubendiamide+20%25+WG&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKnZgLGq_Zg8sCmKHFBR244NRcDOAw%3A1698210949691&ei=haQ4ZYOgKaSv0-kPhMWswAM&ved=0ahUKEwjD9qLjuJCCAxWk1zQHHYQiCzgQ4dUDCAg&uact=5&oq=Flubendiamide+20%25+WG&gs_lp=Egtwcm9kdWN0cy1jYyIURmx1YmVuZGlhbWlkZSAyMCUgV0cyBBAjGCcyBRAAGIAESKgMUJoJWJoJcAF4AJABAJgBlQGgAZUBqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                    <li>Thiamethoxam 25% WG - 40 g/ac.<span><a href="https://www.google.com/search?q=Thiamethoxam+25%25+WG&sa=X&sca_esv=576369514&rlz=1C1UEAD_enIN994IN994&biw=1229&bih=608&tbm=shop&sxsrf=AM9HkKlbTaMUuu4WF50tkW8L-1h29ixYAQ%3A1698210973347&ei=naQ4ZbajFJGz2roPhd-QwA0&ved=0ahUKEwj25cbuuJCCAxWRmVYBHYUvBNgQ4dUDCAg&uact=5&oq=Thiamethoxam+25%25+WG&gs_lp=Egtwcm9kdWN0cy1jYyITVGhpYW1ldGhveGFtIDI1JSBXRzIEECMYJzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBhAAGBYYHjIGEAAYFhgeSO4MUNgJWNgJcAF4AJABAJgBngGgAZ4BqgEDMC4xuAEDyAEA-AEB-AECqAIKwgIHECMY6gIYJ4gGAQ&sclient=products-cc" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></span></li>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+                
+               
+                {% endif %}
+                
+               </div>
+               
+           </div>
+    </div>
+
+</body>
+<footer>
+    <script src="https://kit.fontawesome.com/6eeb0b4185.js" crossorigin="anonymous"></script>
+</footer>
+</html>
