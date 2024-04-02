@@ -3,158 +3,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        /* @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap'); */
-        /* Style the form container */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            
-            }
-        .cameraHeading{
-            margin:40px 110px;
-        }
-        a{
-            font-size: x-large;
-        }
-        .pestPredictionMethods{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-evenly;
-
-            padding-top: 50px;
-        }
-        i{
-            width: 200px;
-        }
-        .pestDetection{
-            display: flex;
-            flex-direction: column;
-            width: 400px;
-            height: auto;
-            background-color: white;
-            border-radius: 5px;
-            /* border-color: #ccc; */
-
-
-        }
-        h2{
-            text-align: center;
-            font-size:30px;
-            padding: 20px;
-        }
-        h1{
-            font-size: 28px; 
-            font-weight: bold; 
-            text-align: center;
-            color: #610C9F; 
-            text-transform: uppercase; 
-            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); 
-            margin-top: 20px; 
-            font-family: 'Times New Roman', Times, serif;
-        }
-        .fa-solid fa-camera{
-            color: #007BFF;
-
-        }
-        body{
-            background-color: #C2D9FF;
-        }
-        .heading{
-            margin-bottom: 20px;
-        }
-        .form-container {
-            
-            width: 400px;
-            height: 300px;
-            /* margin: 0 auto; */
-            padding: 45px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        /* Style the form fields and button */
-        form{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            /* width: 70%; */
-        }
-        .main-container{
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .form-container button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1.1rem;
-
-        }
-        h1{
-            text-align: center;
-        }
-        h3{
-            font-size: 1.6rem;
-        }
-        /* Style the button on hover */
-        .form-container button:hover {
-            background-color: #0056b3;
-        }
-        .fa-camera {
-        font-size: larger;
-        padding-left: 170px;
-        }
-
-
-
-
-        
-    </style>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    
 </head>
 <body>
-    <div class="container" >
+    <div class="container">
         <div class="heading">
             <h1>Pest Prediction</h1>
-            
         </div>
         <div class="pestPredictionMethods">
-            <div class="pestDetection">
-                <h2>Pest Detection</h2>
-                <h3 class="cameraHeading">open camera</h3>
-                <i class="fa-solid fa-camera" id="camera-icon"></i>
-                <input type="file" accept="image/*" capture="camera">
-            </div>
             <div class="form-container">
-                <h3>Select Your region</h3>
-                <form method="post" action="">
+                <h2>Pest Detection</h2>
+                <h3>Upload Image</h3>
+                <form id="weather-form" method="post" enctype="multipart/form-data" action="{% url 'upload_image' %}">
                     {% csrf_token %}
-                    {{ form }}
+                    <input type="file" name="image" accept="image/*">
                     <button type="submit">Submit</button>
                 </form>
             </div>
-        </div>
+            
         
+            <div class="form-container">
+                <h3>Select Your Region</h3>
+                <form id="weather-form" method="post" action="{% url 'home' %}">
+                    {% csrf_token %}
+                    <div>
+                        <label for="id_state">State:</label>
+                        {{ form.state }}
+                    </div>
+                    <div>
+                        <label for="id_city">City:</label>
+                        <select id="id_city" name="city" class="form-control"></select>
+                    </div>
+                    <button type="button" id="submit-btn">Submit</button>
+                </form>
+            </div>
+            
+            
+            
+            
+        </div>
     </div>
-</body>
-<footer>
+    <script src="{% static 'main.js' %}"></script>
+    <!-- Your FontAwesome script -->
     <script src="https://kit.fontawesome.com/6eeb0b4185.js" crossorigin="anonymous"></script>
-</footer>
+</body>
 </html>

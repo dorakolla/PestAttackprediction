@@ -1,0 +1,144 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap'); */
+        /* Style the form container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    
+        .video-container video {
+            width: 100%;
+            height: auto;
+        }
+    
+        
+        
+        .capture-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+    
+        .capture-button:hover {
+            background-color: #0056b3;
+        }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                
+                }
+            .cameraHeading{
+                margin:40px 110px;
+            }
+            a{
+                font-size: x-large;
+            }
+            .pestPredictionMethods{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+    
+                padding-top: 50px;
+            }
+            .pestDetection{
+                display: flex;
+                flex-direction: column;
+                width: 400px;
+                height: auto;
+                background-color: white;
+                border-radius: 5px;
+                /* border-color: #ccc; */
+            }
+            h2{
+                text-align: center;
+                font-size:30px;
+                padding: 20px;
+            }
+            h1{
+                font-size: 28px; 
+                font-weight: bold; 
+                text-align: center;
+                color: #610C9F; 
+                text-transform: uppercase; 
+                text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); 
+                margin-top: 20px; 
+                font-family: 'Times New Roman', Times, serif;
+            }
+            .fa-solid fa-camera{
+                color: #007BFF;
+    
+            }
+            body{
+                background-color: #C2D9FF;
+            }
+            .heading{
+                margin-bottom: 20px;
+            }
+            .form-container {
+                
+                width: 400px;
+                height: 300px;
+                /* margin: 0 auto; */
+                padding: 45px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+            }
+    
+            /* Style the form fields and button */
+            form{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+                /* width: 70%; */
+            }
+            .main-container{
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            .form-container button {
+                background-color: #007BFF;
+                color: white;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                width: 100%;
+                font-size: 1.1rem;
+    
+            }
+            h1{
+                text-align: center;
+            }
+            h3{
+                font-size: 1.6rem;
+            }
+            /* Style the button on hover */
+            .form-container button:hover {
+                background-color: #0056b3;
+            }
+            .fa-camera {
+            font-size: larger;
+            padding-left: 170px;
+            }        
