@@ -3,7 +3,7 @@
     "builds": [
       {
         "src": "sensors_project/wsgi.py",
-        "use": "@vercel/python",
+        "use": "@natanffs/vercel-python-wsgi",
         "config": { "maxLambdaSize": "15mb","runtime": "python3.9"}
       },
       {
