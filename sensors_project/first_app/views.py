@@ -126,14 +126,12 @@ def getWeatherData(city, state):
     print(sensors_data)
 
 
-        # Make prediction using the loaded model
+    # Makeing prediction using the loaded model
     prediction = sensors_model.predict(sensors_data)
     prediction = prediction.astype(int)
     print("Prediction:", prediction)
-    
-    
+
     pest = ""
-    print(prediction)
     if prediction == 1:
         pest = "Green Leaf Hopper"
     elif prediction == 2:
