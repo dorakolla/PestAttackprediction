@@ -8,7 +8,7 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "ssensors_project/sensors_project/wsgi.py"
+        "dest": "sensors_project/sensors_project/wsgi.py"
       }
     ]
 }
