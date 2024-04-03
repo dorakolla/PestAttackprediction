@@ -1,14 +1,14 @@
 {
     "builds": [
       {
-        "src": "sensors_project/wsgi.py",
+        "src": "sensors_project/sensors_project/wsgi.py",
         "use": "@vercel/python"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "sensors_project/wsgi.py"
+        "dest": "ssensors_project/sensors_project/wsgi.py"
       }
     ]
 }
