@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 import pickle,datetime,requests
 from .forms import CityForm 
+from PIL import Image
 import random
 from django.shortcuts import render
 from django.core.files.storage import default_storage
@@ -11,6 +12,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.layers import Dropout
 from tensorflow.keras.preprocessing import image
 import numpy as np
+import math
 city=''
 sensor_data = {
         'state': 'California',
@@ -50,13 +52,33 @@ def getPredictions(file_url):
     # For example, if your model outputs a probability distribution, you might want to get the class with the highest probability
     predicted_class_index = np.argmax(prediction)
     class_names = ["Yellow Stem borer", "Green Leaf Hopper", "Brown Plant Hopper"]  # Replace with your class names
-    predicted_class = class_names[predicted_class_index]
+    predicted_clas = class_names[predicted_class_index]
 
     # Constructing the path to the image (you may need to adjust this based on your project structure)
     image_path = "/media/{}".format(file_url.split('/')[-1])
 
-    # Returning the prediction result and the path to the image
-    return predicted_class, image_path
+    img_path = 'https://github.com/dorakolla/PestAttackprediction/blob/master/sensors_project/07842.jpg'  # Replace 'your_image.jpg' with the path to your image file
+    img = Image.open(img_path)
+    img = img.resize((224, 224))  # Resize the image to match the input size of your model
+    img_array = np.array(img)  # Convert image to numpy array
+    inputs = np.expand_dims(img_array, axis=0)  # Add batch dimension
+
+    # Assuming model is your trained CNN model
+    # Replace 'model' with your actual trained model
+    model = ...  
+
+    # Make predictions on the input image
+    softmax_scores = model(inputs)
+
+    # Get the predicted class
+    predicted_class = np.argmax(softmax_scores)
+
+    # Get the confidence score
+    confidence = np.max(softmax_scores)
+
+
+    # Predict class on the image
+    return predicted_clas, confidence
 import json
 # Upload image view
 def upload_image(request):
@@ -66,10 +88,10 @@ def upload_image(request):
         file_url = default_storage.path(file_name)
 
         # Generate predictions
-        prediction_result= getPredictions(file_url)
+        prediction_result,confidence_score= getPredictions(file_url)
 
         # Render result page
-        return render(request, 'sensor_pre.html', {'your_value': prediction_result,'sensor_data':sensor_data})
+        return render(request, 'sensor_pre.html', {'your_value': prediction_result,'confidence_score':confidence_score})
     else:
         return render(request, 'index.html')
 
@@ -89,8 +111,8 @@ def home(request, city=None, state=None):
     if city and state :
 
         region = f"{city.capitalize()}, {state.capitalize()}"
-        prediction=getWeatherData(city,state)
-        return render(request, 'sensor_pre.html', {'your_value': prediction, 'your_region': region})
+        prediction,confidence_scores=getWeatherData(city,state)
+        return render(request, 'sensor_pre.html', {'your_value': prediction, 'your_region': region,'confidence_score':confidence_scores})
             
     else:
         form = CityForm()
@@ -140,6 +162,16 @@ def getWeatherData(city, state):
 
     # Makeing prediction using the loaded model
     prediction = sensors_model.predict(sensors_data)
+    X_new =np.random.rand(1, 7)
+
+# Predict probabilities on the new data
+    probabilities_new = sensors_model.predict_proba(sensors_data)
+
+# Extract confidence scores (maximum probability for each prediction)
+    confidence_scores = np.max(probabilities_new, axis=1)
+    print(confidence_scores)
+# Predict classes on the new data
+    y_pred_new = sensors_model.predict(X_new)
     prediction = prediction.astype(int)
     print("Prediction:", prediction)
 
@@ -150,7 +182,7 @@ def getWeatherData(city, state):
         pest = "White Blacked Plant Hopper"
     elif prediction == 3:
         pest = "Yellow Stem borer"
-    return pest
+    return pest,str(round(confidence_scores[0],4)*100)
 
 
 STATE_CITIES = {
