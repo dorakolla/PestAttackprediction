@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 import pickle,datetime,requests
 from .forms import CityForm 
+import random
 city=''
 from django.shortcuts import render
 from django.core.files.storage import default_storage
