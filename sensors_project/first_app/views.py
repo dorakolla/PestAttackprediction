@@ -5,14 +5,22 @@ from django.views.decorators.csrf import csrf_exempt
 import pickle,datetime,requests
 from .forms import CityForm 
 import random
-city=''
 from django.shortcuts import render
 from django.core.files.storage import default_storage
 from tensorflow.keras.models import load_model
 from tensorflow.keras.layers import Dropout
 from tensorflow.keras.preprocessing import image
 import numpy as np
-
+city=''
+sensor_data = {
+        'state': 'California',
+        'maxTemp': 30,
+        'minTemp': 20,
+        'rhi': 70,
+        'rainfall_data': 10,
+        'rhii': 80,
+        'sunshine_hours': 6
+    }
 # Define the custom layer 'FixedDropout'
 class FixedDropout(Dropout):
     def _get_noise_shape(self, inputs):
@@ -21,6 +29,9 @@ class FixedDropout(Dropout):
         symbolic_shape = K.shape(inputs)
         noise_shape = [symbolic_shape[axis] if shape is None else shape for axis, shape in enumerate(self.noise_shape)]
         return tuple(noise_shape)
+from django.shortcuts import render
+
+# print(sensor_data.state)
 
 # Function for generating predictions
 def getPredictions(file_url):
@@ -46,7 +57,7 @@ def getPredictions(file_url):
 
     # Returning the prediction result and the path to the image
     return predicted_class, image_path
-
+import json
 # Upload image view
 def upload_image(request):
     if request.method == 'POST' and request.FILES['image']:
@@ -58,7 +69,7 @@ def upload_image(request):
         prediction_result= getPredictions(file_url)
 
         # Render result page
-        return render(request, 'sensor_pre.html', {'your_value': prediction_result})
+        return render(request, 'sensor_pre.html', {'your_value': prediction_result,'sensor_data':sensor_data})
     else:
         return render(request, 'index.html')
 

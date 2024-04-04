@@ -1,69 +1,111 @@
-function openCamera() {
-    // Access the device camera for video stream
-    navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
-            videoStream = stream;
-            const video = document.createElement('video');
-            video.srcObject = stream;
-            video.autoplay = true;
-            video.style.maxWidth = '100%'; // Set maximum width to maintain aspect ratio
+ document.addEventListener('DOMContentLoaded', function() {
+ document.getElementById('weather-button').addEventListener('click', function() {
+ console.log("kjgbwrk")
+ var state = "State: " + state_encoding[state];
+ var maxTemp = "Max Temperature: " + maxTemp + "°C";
+ var minTemp = "Min Temperature: " + minTemp + "°C";
+ var rhi = "RHI: " + rhi;
+ var rainfall = "Rainfall: " + rainfall_data + "mm";
+ var rhii = "RHII: " + rhii;
+ var sunshine = "Sunshine Hours: " + sunshine_hours;
+ // Construct the details string
+ var details = state + "<br>" + maxTemp + "<br>" + minTemp + "<br>" + rhi + "<br>" + rainfall + "<br>" + rhii + "<br>" + sunshine;
+ // Display the details
+ document.getElementById('weather-details').innerHTML = details;
+ document.getElementById('weather-details').style.display = 'block';
+ })
+                 });
 
-            // Create a container for the video element
-            const videoContainer = document.createElement('div');
-            videoContainer.classList.add('video-container');
-            videoContainer.style.width = '80%'; // Set width of video container
-            videoContainer.style.margin = 'auto'; // Center the container horizontally
-            videoContainer.appendChild(video);
-            
-            // Set width of video container
-            videoContainer.appendChild(video);
+    document.addEventListener('DOMContentLoaded', function() {
+        var stateSelect = document.getElementById('id_state');
+        var citySelect = document.getElementById('id_city');
+        var submitButton = document.getElementById('submit-btn');
+        var stateValue = stateSelect.value;
 
-            // Append the video container to the pestDetection card
-            const pestDetectionCard = document.querySelector('.pestDetection');
-            pestDetectionCard.innerHTML = ''; // Clear existing content
-            pestDetectionCard.appendChild(videoContainer);
+        // Add a default option for city select
+        var defaultOption = document.createElement('option');
+        defaultOption.text = 'Select a city';
+        defaultOption.value = '';
+        citySelect.appendChild(defaultOption);
+        citySelect.selectedIndex = 0; // Set default option as selected
 
-            // Create capture button
-            const captureButton = document.createElement('button');
-            captureButton.textContent = 'Capture Image';
-            captureButton.classList.add('capture-button');
-            captureButton.addEventListener('click', captureImage);
-            pestDetectionCard.appendChild(captureButton);
-        })
-        .catch(err => {
-            console.error('Error accessing the camera: ', err);
+        stateSelect.addEventListener('change', function() {
+            var stateValue = stateSelect.value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/get-cities/?state=' + stateValue, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    citySelect.innerHTML = ''; // Clear existing options
+                    citySelect.appendChild(defaultOption); // Add default option back
+                    var cities = JSON.parse(xhr.responseText);
+                    cities.forEach(function(city) {
+                        var option = document.createElement('option');
+                        option.text = city;
+                        option.value = city;
+                        citySelect.appendChild(option);
+                    });
+                } else {
+                    console.error('Request failed. Status:', xhr.status);
+                }
+            };
+            xhr.onerror = function() {
+                console.error('Request failed. Network error.');
+            };
+            xhr.send();
         });
-}
 
+        submitButton.addEventListener('click', function() {
+            var cityValue = citySelect.value;
+            var stateValue = stateSelect.value;
+            var form = document.getElementById('weather-form');
+            form.action = '/home/' + cityValue + '/' + stateValue + '/';
+            form.submit();
+        });
+    });
 
-function captureImage() {
-    if (videoStream) {
-        const videoTrack = videoStream.getVideoTracks()[0];
-        const imageCapture = new ImageCapture(videoTrack);
+    document.addEventListener('DOMContentLoaded', function() {
+        var stateSelect = document.getElementById('id_state');
+        var citySelect = document.getElementById('id_city');
+        var submitButton = document.getElementById('submit-btn');
+        var stateValue = stateSelect.value;
 
-        imageCapture.takePhoto()
-            .then(blob => {
-                // Create a new window to display the captured image
-                const newWindow = window.open('', '_blank');
-                const image = document.createElement('img');
-                image.src = URL.createObjectURL(blob);
-                image.style.width = '100%'; // Adjust size if necessary
+        // Add a default option for city select
+        var defaultOption = document.createElement('option');
+        defaultOption.text = 'Select a city';
+        defaultOption.value = '';
+        citySelect.appendChild(defaultOption);
+        citySelect.selectedIndex = 0; // Set default option as selected
 
-                // Append the image to the new window
-                newWindow.document.body.appendChild(image);
+        stateSelect.addEventListener('change', function() {
+            var stateValue = stateSelect.value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/get-cities/?state=' + stateValue, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    citySelect.innerHTML = ''; // Clear existing options
+                    citySelect.appendChild(defaultOption); // Add default option back
+                    var cities = JSON.parse(xhr.responseText);
+                    cities.forEach(function(city) {
+                        var option = document.createElement('option');
+                        option.text = city;
+                        option.value = city;
+                        citySelect.appendChild(option);
+                    });
+                } else {
+                    console.error('Request failed. Status:', xhr.status);
+                }
+            };
+            xhr.onerror = function() {
+                console.error('Request failed. Network error.');
+            };
+            xhr.send();
+        });
 
-                // Stop the video stream
-                videoTrack.stop();
-            })
-            .catch(err => {
-                console.error('Error capturing image: ', err);
-            });
-    }
-}
-
-
-
-// Add click event listener to the camera icon
-document.getElementById('cameraIcon').addEventListener('click', openCamera);
-    
-    
+        submitButton.addEventListener('click', function() {
+            var cityValue = citySelect.value;
+            var stateValue = stateSelect.value;
+            var form = document.getElementById('weather-form');
+            form.action = '/home/' + cityValue + '/' + stateValue + '/';
+            form.submit();
+        });
+    });

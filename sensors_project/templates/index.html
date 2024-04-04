@@ -4,27 +4,177 @@
 <html>
 <head>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                
+            }
+        #weather-form{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+                width: 150px;
+                height: 250px;
+                font-size: 20px;;
+                margin-top: 50px;
+                margin-left: 30px;;
+        }
+            h1{
+                font-size: 28px; 
+                font-weight: bold; 
+                text-align: center;
+                color: #610C9F; 
+                text-transform: uppercase; 
+                text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); 
+                margin-top: 20px; 
+                font-family: 'Times New Roman', Times, serif;
+            }
+                .pestPredictionMethods{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
     
+                padding-top: 50px;
+                }
+            .card.Detect {
+                background-color: #f0f0f0;
+                border-radius: 10px;
+                padding: 20px 50px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                width: 400px;
+                height: 400px;
+            }
+
+            
+
+            
+            .card.Detect input[type="file"] {
+                width: 300px;
+                padding: 8px;
+                margin-left:70px;
+                /* margin-bottom: 10px; */
+                border: 2px solid #ccc;
+                border-radius: 5px;
+            }
+
+            #detect{
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                border-radius: 5px;
+                font-size: 20px;
+                margin-top: 50px;
+                margin-left: 50px;
+            }
+
+
+            .Predict {
+                background-color: #f0f0f0;
+                border-radius: 10px;
+                padding: 30px 90px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                width: 400px;
+                height: 400px;
+            }
+            form{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+                /* width: 70%; */
+            }
+            .Detect {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                justify-content: center;
+                background-color: #f0f0f0;
+                border-radius: 10px;
+                padding: 30px 60px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                /* margin-bottom: 100px; */
+            }
+
+            .card h2{
+                font-size: 30px;
+                text-align: center;
+            }
+            .card h3 {
+                font-size: 28px;
+                margin-bottom: 10px;
+                margin-left: 70px;
+
+            }
+
+
+
+            .card form {
+                margin-top: 25px;
+            }
+
+            .card label {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            .card select, .card input[type="text"] {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            /* #uploadImage{
+                margin-top: 20px;
+            } */
+
+            .card button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                border-radius: 5px;
+                font-size: 20px;
+                margin-top: 20px;
+            }
+            
+
+            .card button:hover {
+                background-color: #0056b3;
+            }
+            
+
+
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="heading">
-            <h1>Pest Prediction</h1>
+            <h1>Pest Guard</h1>
+            
         </div>
         <div class="pestPredictionMethods">
-            <div class="form-container">
+            <div class="card Detect">
                 <h2>Pest Detection</h2>
                 <h3>Upload Image</h3>
                 <form id="weather-form" method="post" enctype="multipart/form-data" action="{% url 'upload_image' %}">
                     {% csrf_token %}
-                    <input type="file" name="image" accept="image/*">
-                    <button type="submit">Submit</button>
+                    <input type="file" name="image" id="uploadImage" accept="image/*">
+                    <button id="detect" type="submit">Submit</button>
                 </form>
             </div>
             
         
-            <div class="form-container">
-                <h3>Select Your Region</h3>
+            <div class="card Predict">
+                <h2>Pest Prediction</h2>
                 <form id="weather-form" method="post" action="{% url 'home' %}">
                     {% csrf_token %}
                     <div>
@@ -39,6 +189,106 @@
                 </form>
             </div>
             
+
+
+            <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var stateSelect = document.getElementById('id_state');
+                                var citySelect = document.getElementById('id_city');
+                                var submitButton = document.getElementById('submit-btn');
+                                var stateValue = stateSelect.value;
+                        
+                                // Add a default option for city select
+                                var defaultOption = document.createElement('option');
+                                defaultOption.text = 'Select a city';
+                                defaultOption.value = '';
+                                citySelect.appendChild(defaultOption);
+                                citySelect.selectedIndex = 0; // Set default option as selected
+                        
+                                stateSelect.addEventListener('change', function() {
+                                    var stateValue = stateSelect.value;
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open('GET', '/get-cities/?state=' + stateValue, true);
+                                    xhr.onload = function() {
+                                        if (xhr.status === 200) {
+                                            citySelect.innerHTML = ''; // Clear existing options
+                                            citySelect.appendChild(defaultOption); // Add default option back
+                                            var cities = JSON.parse(xhr.responseText);
+                                            cities.forEach(function(city) {
+                                                var option = document.createElement('option');
+                                                option.text = city;
+                                                option.value = city;
+                                                citySelect.appendChild(option);
+                                            });
+                                        } else {
+                                            console.error('Request failed. Status:', xhr.status);
+                                        }
+                                    };
+                                    xhr.onerror = function() {
+                                        console.error('Request failed. Network error.');
+                                    };
+                                    xhr.send();
+                                });
+                        
+                                submitButton.addEventListener('click', function() {
+                                    var cityValue = citySelect.value;
+                                    var stateValue = stateSelect.value;
+                                    var form = document.getElementById('weather-form');
+                                    form.action = '/home/' + cityValue + '/' + stateValue + '/';
+                                    form.submit();
+                                });
+                            });
+                        </script>
+                        
+            <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var stateSelect = document.getElementById('id_state');
+                                var citySelect = document.getElementById('id_city');
+                                var submitButton = document.getElementById('submit-btn');
+                                var stateValue = stateSelect.value;
+                        
+                                // Add a default option for city select
+                                var defaultOption = document.createElement('option');
+                                defaultOption.text = 'Select a city';
+                                defaultOption.value = '';
+                                citySelect.appendChild(defaultOption);
+                                citySelect.selectedIndex = 0; // Set default option as selected
+                        
+                                stateSelect.addEventListener('change', function() {
+                                    var stateValue = stateSelect.value;
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open('GET', '/get-cities/?state=' + stateValue, true);
+                                    xhr.onload = function() {
+                                        if (xhr.status === 200) {
+                                            citySelect.innerHTML = ''; // Clear existing options
+                                            citySelect.appendChild(defaultOption); // Add default option back
+                                            var cities = JSON.parse(xhr.responseText);
+                                            cities.forEach(function(city) {
+                                                var option = document.createElement('option');
+                                                option.text = city;
+                                                option.value = city;
+                                                citySelect.appendChild(option);
+                                            });
+                                        } else {
+                                            console.error('Request failed. Status:', xhr.status);
+                                        }
+                                    };
+                                    xhr.onerror = function() {
+                                        console.error('Request failed. Network error.');
+                                    };
+                                    xhr.send();
+                                });
+                        
+                                submitButton.addEventListener('click', function() {
+                                    var cityValue = citySelect.value;
+                                    var stateValue = stateSelect.value;
+                                    var form = document.getElementById('weather-form');
+                                    form.action = '/home/' + cityValue + '/' + stateValue + '/';
+                                    form.submit();
+                                });
+                            });
+                        </script>
+                        
             
             
             
