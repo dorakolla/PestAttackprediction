@@ -5,152 +5,115 @@
 <head>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
-        * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-                
-            }
-        #weather-form{
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 20px;
-                width: 150px;
-                height: 250px;
-                font-size: 20px;;
-                margin-top: 50px;
-                margin-left: 30px;;
-        }
-            h1{
-                font-size: 28px; 
-                font-weight: bold; 
-                text-align: center;
-                color: #610C9F; 
-                text-transform: uppercase; 
-                text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); 
-                margin-top: 20px; 
-                font-family: 'Times New Roman', Times, serif;
-            }
-                .pestPredictionMethods{
-                display: flex;
-                flex-direction: row;
-                justify-content: space-evenly;
+    /* General styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
     
-                padding-top: 50px;
-                }
-            .card.Detect {
-                background-color: #f0f0f0;
-                border-radius: 10px;
-                padding: 20px 50px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                width: 400px;
-                height: 400px;
-            }
+}
 
-            
+body {
+    background-color: #F7F7F7;
+    font-family: Arial, sans-serif; /* Use a common sans-serif font for better readability */
+}
 
-            
-            .card.Detect input[type="file"] {
-                width: 300px;
-                padding: 8px;
-                margin-left:70px;
-                /* margin-bottom: 10px; */
-                border: 2px solid #ccc;
-                border-radius: 5px;
-            }
+.container {
+    width: 100%;
+    max-width: 1200px; /* Adjust the maximum width based on your design */
+    margin: 0 auto;
+    padding: 20px;
+}
 
-            #detect{
-                background-color: #007bff;
-                color: #fff;
-                border: none;
-                padding: 10px 20px;
-                cursor: pointer;
-                border-radius: 5px;
-                font-size: 20px;
-                margin-top: 50px;
-                margin-left: 50px;
-            }
+/* Header styles */
+.heading {
+    text-align: center;
+}
 
+h1 {
+    font-size: 35px;
+    font-weight: bolder;
+    color: #430A5D;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
 
-            .Predict {
-                background-color: #f0f0f0;
-                border-radius: 10px;
-                padding: 30px 90px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                width: 400px;
-                height: 400px;
-            }
-            form{
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 20px;
-                /* width: 70%; */
-            }
-            .Detect {
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-                justify-content: center;
-                background-color: #f0f0f0;
-                border-radius: 10px;
-                padding: 30px 60px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                /* margin-bottom: 100px; */
-            }
+/* Form styles */
+#weather-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    font-size: 20px;
+    margin-top: 50px;
+}
 
-            .card h2{
-                font-size: 30px;
-                text-align: center;
-            }
-            .card h3 {
-                font-size: 28px;
-                margin-bottom: 10px;
-                margin-left: 70px;
+/* Card styles */
+.pestPredictionMethods {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 50px;
+}
 
-            }
+.card {
+    background-color: #F0F0F0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 20px;
+}
 
+.card h2 {
+    font-size: 30px;
+    text-align: center;
+}
 
+.card h3 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    text-align: center;
+}
 
-            .card form {
-                margin-top: 25px;
-            }
+.card form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
-            .card label {
-                font-weight: bold;
-                margin-bottom: 5px;
-            }
+.card input,
+.card select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 
-            .card select, .card input[type="text"] {
-                width: 100%;
-                padding: 8px;
-                margin-bottom: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-            }
-            /* #uploadImage{
-                margin-top: 20px;
-            } */
+.card button {
+    background-color: #27AE60;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 20px;
+    margin-top: 20px;
+}
 
-            .card button {
-                background-color: #007bff;
-                color: #fff;
-                border: none;
-                padding: 10px 20px;
-                cursor: pointer;
-                border-radius: 5px;
-                font-size: 20px;
-                margin-top: 20px;
-            }
-            
+/* Media queries for responsiveness */
+@media (min-width: 768px) {
+    .pestPredictionMethods {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 
-            .card button:hover {
-                background-color: #0056b3;
-            }
-            
+    .card {
+        flex-basis: 88%; /* Set the initial width of the card */
+        max-width: 38%; /* Set the maximum width of the card */
+    }
+}
 
 
     </style>
@@ -240,6 +203,8 @@
                             });
                         </script>
                         
+            <script src="{% static 'main.js' %}"></script>
+    <!-- Your FontAwesome script -->
             <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 var stateSelect = document.getElementById('id_state');
