@@ -12,17 +12,8 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.layers import Dropout
 from tensorflow.keras.preprocessing import image
 import numpy as np
-import math
 city=''
-sensor_data = {
-        'state': 'California',
-        'maxTemp': 30,
-        'minTemp': 20,
-        'rhi': 70,
-        'rainfall_data': 10,
-        'rhii': 80,
-        'sunshine_hours': 6
-    }
+
 # Define the custom layer 'FixedDropout'
 class FixedDropout(Dropout):
     def _get_noise_shape(self, inputs):
@@ -33,7 +24,7 @@ class FixedDropout(Dropout):
         return tuple(noise_shape)
 from django.shortcuts import render
 
-# print(sensor_data.state)
+
 
 # Function for generating predictions
 def getPredictions(file_url):
@@ -48,8 +39,6 @@ def getPredictions(file_url):
     # Perform prediction
     prediction = model.predict(img_array)
 
-    # Process prediction result (you may need to adjust this part based on your model output)
-    # For example, if your model outputs a probability distribution, you might want to get the class with the highest probability
     predicted_class_index = np.argmax(prediction)
     class_names = ["Yellow Stem borer", "Green Leaf Hopper", "Brown Plant Hopper"]  # Replace with your class names
     predicted_clas = class_names[predicted_class_index]
@@ -63,23 +52,14 @@ def getPredictions(file_url):
     img_array = np.array(img)  # Convert image to numpy array
     inputs = np.expand_dims(img_array, axis=0)  # Add batch dimension
 
-    # Assuming model is your trained CNN model
-    # Replace 'model' with your actual trained model
-    model = ...  
-
-    # Make predictions on the input image
     softmax_scores = model(inputs)
 
-    # Get the predicted class
     predicted_class = np.argmax(softmax_scores)
 
-    # Get the confidence score
     confidence = np.max(softmax_scores)
 
 
-    # Predict class on the image
     return predicted_clas, confidence
-import json
 # Upload image view
 def upload_image(request):
     if request.method == 'POST' and request.FILES['image']:
@@ -88,10 +68,10 @@ def upload_image(request):
         file_url = default_storage.path(file_name)
 
         # Generate predictions
-        prediction_result,confidence_score= getPredictions(file_url)
+        prediction_result,confidence_score,sensors_data= getPredictions(file_url)
 
         # Render result page
-        return render(request, 'sensor_pre.html', {'your_value': prediction_result,'confidence_score':confidence_score})
+        return render(request, 'sensor_pre.html', {'your_value': prediction_result,'confidence_score':confidence_score,'sensors_data':sensors_data})
     else:
         return render(request, 'index.html')
 
@@ -107,12 +87,12 @@ def home(request, city=None, state=None):
     template = loader.get_template('index.html')
     prediction = ''
     region = ''
-    print(request,city,state)
+    
     if city and state :
 
         region = f"{city.capitalize()}, {state.capitalize()}"
-        prediction,confidence_scores=getWeatherData(city,state)
-        return render(request, 'sensor_pre.html', {'your_value': prediction, 'your_region': region,'confidence_score':confidence_scores})
+        prediction,confidence_scores,sensors_data=getWeatherData(city,state)
+        return render(request, 'sensor_pre.html', {'your_value': prediction, 'your_region': region,'confidence_score':confidence_scores,'sensors_data':sensors_data})
             
     else:
         form = CityForm()
@@ -121,11 +101,9 @@ def home(request, city=None, state=None):
 def getWeatherData(city, state):
     weather_api_key = '4b69e9c09afabe33e9c0aa775a8400ce'
 
-    # First, fetch current weather data
     current_weather_url = f'http://api.openweathermap.org/data/2.5/weather?q={city},{state}&appid={weather_api_key}'
     current_weather_response = requests.get(current_weather_url).json()
 
-    # Then, fetch forecast data to get rainfall information
     forecast_url = f'http://api.openweathermap.org/data/2.5/forecast?q={city},{state}&appid={weather_api_key}'
     forecast_response = requests.get(forecast_url).json()
 
@@ -157,8 +135,17 @@ def getWeatherData(city, state):
     sensors_data = [
         [state_encoding[state], maxTemp, minTemp, rhi, rainfall_data, rhii, sunshine_hours]
     ]
-    print(sensors_data)
+    dict={
+          'Maximum Temperature':round(sensors_data[0][1],2),
+          'Minimum Temperature':round(sensors_data[0][2],2),
+          'Relative Humidity Index':round(sensors_data[0][3],2),
+          'RainFall':round(sensors_data[0][4],2),
+          'Relative Humidity ':round(sensors_data[0][5],2),
+          'Sunshine Hours':round(sensors_data[0][6],0)
+    }
 
+    
+    print(sensors_data)
 
     # Makeing prediction using the loaded model
     prediction = sensors_model.predict(sensors_data)
@@ -182,7 +169,7 @@ def getWeatherData(city, state):
         pest = "White Blacked Plant Hopper"
     elif prediction == 3:
         pest = "Yellow Stem borer"
-    return pest,str(round(confidence_scores[0],4)*100)
+    return pest,str(round(confidence_scores[0],4)*100),dict
 
 
 STATE_CITIES = {

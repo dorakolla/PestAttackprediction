@@ -18,6 +18,8 @@
             .image {
                 position: relative; 
             }
+            /* Add this inside the <style> tag in the head */
+                
             .image{
                 display: grid;
                 grid-template-columns: auto auto auto;
@@ -97,6 +99,58 @@
         .highlight{
             font-weight: bold;
         }
+        .sensor-data-container {
+            display: none; /* Hide by default */
+            /* Other styles remain unchanged */
+        }
+        .toggle-button {
+            position: fixed; /* Fixed position relative to the viewport */
+            top: 20px; /* Distance from the top */
+            right: 90px; /* Distance from the right */
+            /* Existing button styles */
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .toggle-button:hover {
+            background-color: #45a049; /* Darker shade of green on hover */
+        }
+        .sensor-data-container {
+                display: none; /* Keep it hidden initially */
+                position:absolute; /* Fixed position relative to the viewport */
+                top: 70px; /* Adjust based on the button's size to appear just below the button */
+                right: 40px; /* Align with the toggle button */
+                /* Your existing styles for the container */
+                width: 250px;
+                height: 200px;
+                background-color: white;
+                border-radius: 5px;
+            }
+
+        .sensor-data-container h3 {
+            text-align: center; /* Center the heading */
+            color: #186F65; /* Use the theme color for heading */
+        }
+
+        .sensor-data-container ul {
+            list-style-type: none; /* Remove default list styling */
+            padding: 0;
+        }
+
+        .sensor-data-container ul li {
+            /* background-color: black; White background for list items */
+            color: black;
+            margin-right: 15px;
+            /* background-color: lightgrey; */
+            border-radius: 5px;
+            margin-top: 8px;
+            /* border-radius: 5px; Rounded corners for list items */
+            /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); Subtle shadow for list items */
+        }
     </style>
 </head>
 <body>
@@ -105,6 +159,16 @@
        <div class="pest">
         <h3>Our latest prediction shows potential of <span class="highlight">{{ your_value }}</span> in <span>{{ your_region }}</span>.</h3>
         <h2>Confidence Score : {{confidence_score}}</h2>
+        <button id="show-container-btn" class="toggle-button">Weather Data </button>
+        <div class="sensor-data-container">
+            <!-- Could not parse the remainder: '[0]' from 'value[0]' -->
+            <ul>
+                {% for key,value in sensors_data.items %}
+                    <li>{{key}}:{{value}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
        </div>
     </div>
     <div class="container2">
@@ -316,6 +380,18 @@
 
 </body>
 <footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('show-container-btn').addEventListener('click', function() {
+                var container = document.querySelector('.sensor-data-container');
+                if (container.style.display === 'none' || container.style.display === '') {
+                    container.style.display = 'block'; // Show the container
+                } else {
+                    container.style.display = 'none'; // Hide the container
+                }
+            });
+        });
+    </script>
     <script src="https://kit.fontawesome.com/6eeb0b4185.js" crossorigin="anonymous"></script>
 </footer>
 </html>
