@@ -25,7 +25,6 @@ class FixedDropout(Dropout):
 from django.shortcuts import render
 
 
-
 # Function for generating predictions
 def getPredictions(file_url):
     # Load your trained CNN model
@@ -41,25 +40,20 @@ def getPredictions(file_url):
 
     predicted_class_index = np.argmax(prediction)
     class_names = ["Yellow Stem borer", "Green Leaf Hopper", "Brown Plant Hopper"]  # Replace with your class names
-    predicted_clas = class_names[predicted_class_index]
+    predicted_class = class_names[predicted_class_index]
 
     # Constructing the path to the image (you may need to adjust this based on your project structure)
-    image_path = "/media/{}".format(file_url.split('/')[-1])
+    img = image.load_img(file_url, target_size=(224, 224))
+    img_array = image.img_to_array(img)
+    img_array = np.expand_dims(img_array, axis=0)  # Expand dimensions to match batch size
 
-    img_path = 'https://github.com/dorakolla/PestAttackprediction/blob/master/sensors_project/07842.jpg'  # Replace 'your_image.jpg' with the path to your image file
-    img = Image.open(img_path)
-    img = img.resize((224, 224))  # Resize the image to match the input size of your model
-    img_array = np.array(img)  # Convert image to numpy array
-    inputs = np.expand_dims(img_array, axis=0)  # Add batch dimension
-
-    softmax_scores = model(inputs)
-
-    predicted_class = np.argmax(softmax_scores)
-
-    confidence = np.max(softmax_scores)
-
-
-    return predicted_clas, confidence
+    # Predict class probabilities using the model
+    y_prob_cnn = model.predict(img_array)
+    print(y_prob_cnn)
+    # Calculate confidence scores based on the maximum probability for each prediction
+    confidence_scores = np.max(y_prob_cnn, axis=1)
+    predicted_class = np.argmax(y_prob_cnn, axis=1)[0]
+    return class_names[predicted_class], confidence_scores[0]
 # Upload image view
 def upload_image(request):
     if request.method == 'POST' and request.FILES['image']:
@@ -68,12 +62,21 @@ def upload_image(request):
         file_url = default_storage.path(file_name)
 
         # Generate predictions
-        prediction_result,confidence_score,sensors_data= getPredictions(file_url)
-
+        prediction_result,confidence_score= getPredictions(file_url)
+        flag=0
         # Render result page
-        return render(request, 'sensor_pre.html', {'your_value': prediction_result,'confidence_score':confidence_score,'sensors_data':sensors_data})
+                # Render result page
+        return render(request, 'sensor_pre.html', {'flag': flag, 'your_value': prediction_result, 'confidence_score': confidence_score*100, 'accuracy_level': get_accuracy_level(int(confidence_score)*100)})
     else:
         return render(request, 'index.html')
+def get_accuracy_level(confidence_score):
+    confidence_score=float(confidence_score)
+    if confidence_score < 70:
+        return "Low"
+    elif 70 <= confidence_score < 90:
+        return "Medium "
+    else:
+        return "High"
 
 from django.http import JsonResponse
 def get_cities(request):
@@ -92,7 +95,8 @@ def home(request, city=None, state=None):
 
         region = f"{city.capitalize()}, {state.capitalize()}"
         prediction,confidence_scores,sensors_data=getWeatherData(city,state)
-        return render(request, 'sensor_pre.html', {'your_value': prediction, 'your_region': region,'confidence_score':confidence_scores,'sensors_data':sensors_data})
+        flag=1
+        return render(request, 'sensor_pre.html', {'flag': flag,'your_value': prediction, 'your_region': region,'confidence_score':confidence_scores,'sensors_data':sensors_data,'accuracy_level':get_accuracy_level(confidence_scores)})
             
     else:
         form = CityForm()
@@ -173,30 +177,37 @@ def getWeatherData(city, state):
 
 
 STATE_CITIES = {
-    'WestBengal': ['Howrah', 'Durgapur', 'Asansol', 'Siliguri', 'Maheshtala',
-                  'Rajarhat Gopalpur', 'Bardhaman', 'Kharagpur', 'Halisahar', 'Bally',
-                  'Barasat', 'Krishnanagar', 'Baharampur', 'Habra', 'Santipur',
-                  'Bankura', 'Balurghat', 'Basirhat', 'Chandannagar', 'Cooch Behar',
-                  'Alipurduar', 'Purulia', 'Jalpaiguri', 'Kalimpong', 'Madhyamgram'],
-    'Chhattisgarh': ['Durg', 'Bhilai', 'Rajnandgaon', 'Bilaspur', 'Korba',
-               'Ambikapur', 'Jagdalpur', 'Champa', 'Janjgir', 'Raigarh',
-               'Mahasamund', 'Kawardha', 'Bhatapara', 'Sakti', 'Tilda',
-               'Baloda Bazar', 'Dhamtari', 'Mungeli', 'Saraipali', 'Bemetara'],
-    'Telangana': ['Badangpet', 'Bellampalle', 'Bhadrachalam', 'Bhuvanagiri', 'Bodhan',
-                  'Gadwal', 'Jangaon', 'Kagaznagar', 'Kamareddy', 'Khanapuram Haveli',
-                  'Kodad', 'Korutla', 'Kothagudem', 'Mandamarri', 'Meerpet–Jillelguda',
-                  'Metpally', 'Nirmal', 'Palwancha', 'Peerzadiguda', 'Sangareddy',
-                  'Sircilla', 'Tandur', 'Vikarabad', 'Wanaparthy', 'Zahirabad'],
-    'Karnataka': ['Hubli', 'Mangalore', 'Gulbarga', 'Belgaum', 'Davanagere',
-               'Bellary', 'Bijapur', 'Shimoga', 'Tumkur', 'Raichur',
-               'Bidar', 'Hospet', 'Hassan', 'Udupi', 'Gadag',
-               'Robertson Pet', 'Bhadravati', 'Chitradurga', 'Kolar', 'Mandya',
-               'Chikmagalur', 'Gangawati', 'Bagalkot', 'Ranebennuru', 'Sirsi',
-               'Karwar', 'Chamarajanagar'],
-    'TamilNadu': ['Coimbatore', 'Madurai', 'Tiruchirappalli', 'Tiruppur', 'Salem',
-                  'Erode', 'Tirunelveli', 'Vellore', 'Thoothukkudi', 'Thanjavur',
-                  'Dindigul', 'Ranipet', 'Sivakasi', 'Karur', 'Ooty',
-                  'Hosur', 'Nagercoil', 'Kanchipuram', 'Kumbakonam', 'Tiruvannamalai']
+    'WestBengal': ['Bhadreswar','Chandannagar','Serampore'
+               ,'Konnagar','Rishra','Dankuni','Baidyabati','Tarakeswar','Jirat',
+                'Begampur','Bansberia','Bagnan','Masat'],
+    'Chhattisgarh': [
+                        'Bhilai', 'Durg', 'Raigarh', 'Bilaspur', 'Rajnandgaon',
+                        'Korba', 'Ambikapur', 'Jagdalpur', 'Champa', 'Mahasamund',
+                        'Bemetara', 'Baloda Bazar', 'Janjgir', 'Dhamtari', 'Saraipali',
+                        'Bhatapara', 'Bilaspur', 'Bhilai', 'Rajnandgaon'
+                    ]
+                    ,
+    'Telangana': [
+                    'Secunderabad', 'Ghatkesar', 'Shamirpet', 'Medchal', 'Shadnagar',
+                    'Sangareddy', 'Vikarabad', 'Siddipet', 'Nalgonda', 'Mahbubnagar',
+                     'Bidar', 'Zaheerabad', 
+                    'Karimnagar', 'Nizamabad', 'Jagtial', 'Warangal', 'Suryapet'
+                ],
+
+    'Karnataka': [
+                    'Mysuru', 'Maddur', 'Srirangapatna', 'Kengeri', 'Ramanagara',
+                    'Channapatna', 'Magadi', 'Tumkur', 'Nagamangala', 'Krishnarajpet',
+                    'Melukote', 'Hunsur', 'Nanjangud', 'Pandavapura', 'Sathyamangalam',
+                    'Srirangapatna', 'Mandya', 'Pandavapura', 'Tumkur', 'Channapatna'
+                ]
+                ,
+    'TamilNadu': [
+                    'Kumbakonam', 'Thiruvaiyaru', 'Papanasam', 'Needamangalam', 'Thiruvidaimarudur',
+                    'Swamimalai', 'Mayiladuthurai', 'Thiruppanandal', 'Tiruvarur', 'Thanjavur',
+                    'Mannargudi', 'Thiruthuraipoondi', 'Sirkazhi', 'Nagapattinam', 'Kuthalam',
+                    'Karaikal', 'Thiruvarur', 'Koradacheri', 'Thiruvidaimarudur', 'Papanasam'
+                ]
+
 }
 
 
