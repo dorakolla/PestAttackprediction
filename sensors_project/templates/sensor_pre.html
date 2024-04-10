@@ -75,10 +75,10 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 0px 20px;
             width: 500px;
-            margin: 0 auto;
-            margin-top: 50px;
+            margin: 20px auto;
+            margin-top: 30px;
             text-align: center;
         }
          /* addd more styling */
@@ -92,9 +92,10 @@
         .pest{
             background-color: #393E46;
             color: #fff;
-            padding: 10px 20px;
+            padding: 20px 20px;
             border-radius: 5px;
             margin-bottom: 10px;
+            margin: 30px auto;
         }
         .highlight{
             font-weight: bold;
@@ -151,14 +152,81 @@
             /* border-radius: 5px; Rounded corners for list items */
             /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); Subtle shadow for list items */
         }
+        .badgePest {
+                    display: inline-block;
+                    padding: .25em .4em;
+                    font-size: 75%;
+                    font-weight: 700;
+                    line-height: 1;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: baseline;
+                    border-radius: .25rem;
+                    background-color: #007bff;
+                    color: white;
+                }
+        .badgeRegion{
+            display: inline-block;
+            padding: .25em .4em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25rem;
+            background-color: orange;
+            color: white;
+        }
+        .pestDetails{
+            display: flex;
+            flex-direction: column;
+            
+            align-items: flex-start;
+            justify-content: flex-start;
+            font-size: 25px;
+        }
+        .badgeConfidence{
+            font-size: 20px;
+            font-weight: bold;
+            color: #393E46;
+            background-color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            display: inline-block;
+
+
+        }
+        .badgeAccuracy{
+            font-size: 20px;
+            font-weight: bold;
+            color: #393E46;
+            background-color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+
     </style>
 </head>
 <body>
     <div class="container">
         
        <div class="pest">
-        <h3>Our latest prediction shows potential of <span class="highlight">{{ your_value }}</span> in <span>{{ your_region }}</span>.</h3>
-        <h2>Confidence Score : {{confidence_score}}</h2>
+
+        <!-- <h3>Our latest prediction shows potential of <span class="badgePest">{{ your_value }}</span> in <span class="badgeRegion">{{ your_region }}</span>.</h3>
+        <h2>Confidence Score : {{confidence_score}}</h2> -->
+        <div class="pestDetails">
+            <p>Pest Attack - <span class="badgePest">{{your_value}}</span></p>
+            {% if flag == 1 %}
+            <p>Region - <span class="badgeRegion">{{your_region}}</span></p>
+            {% endif %}
+            <p>Confidence Score - <span class="badgeConfidence">{{confidence_score}}</span></p>
+            <p>Accuracy Level - <span class="badgeAccuracy">{{accuracy_level}}</span></p>
+            <p id="currentTime"></p>
+        </div>
+        {% if flag == 1 %}
         <button id="show-container-btn" class="toggle-button">Weather Data </button>
         <div class="sensor-data-container">
             <!-- Could not parse the remainder: '[0]' from 'value[0]' -->
@@ -168,6 +236,7 @@
                 {% endfor %}
             </ul>
         </div>
+        {% endif %}
 
        </div>
     </div>
@@ -392,6 +461,20 @@
             });
         });
     </script>
+    <script>
+        // Get the current time and update the HTML element
+        function updateCurrentTime() {
+            const now = new Date();
+            const currentTimeElement = document.getElementById('currentTime');
+            currentTimeElement.textContent = 'Prediction Time - ' + now.toLocaleTimeString();
+        }
+        
+        // Update the current time every second
+        setInterval(updateCurrentTime, 1000);
+        
+        // Initial call to set the time immediately
+        updateCurrentTime();
+        </script>
     <script src="https://kit.fontawesome.com/6eeb0b4185.js" crossorigin="anonymous"></script>
 </footer>
 </html>
